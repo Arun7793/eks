@@ -11,7 +11,7 @@ pipeline {
                 script {
                     // Apply the Kubernetes manifest using kubectl
                     sh """
-                    kubectl apply -f nginx-deployment.yaml --kubeconfig $KUBECONFIG
+                    kubectl apply -f nginx-deployment.yaml 
                     """
                 }
             }
