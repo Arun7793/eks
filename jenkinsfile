@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    environment {
+        KUBECONFIG = credentials('kube') // Jenkins credential for kubeconfig
+    }
+
+    stages {
+        stage('Deploy to EKS using kubectl') {
+            steps {
+                script {
+                    // Apply the Kubernetes manifest using kubectl
+                    sh """
+                    kubectl apply -f nginx-deployment.yaml --kubeconfig $KUBECONFIG
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Nginx Deployment to EKS was successful!'
+        }
+        failure {
+            echo 'Deployment failed.'
+        }
+    }
+}
