@@ -1,29 +1,17 @@
 pipeline {
     agent any
 
-    environment {
-        KUBECONFIG = credentials('kube') // Jenkins credential for kubeconfig
-    }
-
     stages {
-        stage('Deploy to EKS using kubectl') {
-            steps {
-                script {
-                    // Apply the Kubernetes manifest using kubectl
-                    sh """
-                    kubectl apply -f nginx-deployment.yaml --kubeconfig $KUBECONFIG
-                    """
-                }
-            }
+        stage('Hello') {
+    steps {
+        script {
+            // Use bash for executing commands
+            sh 'bash -c "aws eks update-kubeconfig --name demo1 --region ap-south-1"'
+            sh 'bash -c "kubectl get ns"'
+            sh 'bash -c "kubectl apply -f deployment.yaml"'
+                
         }
     }
-
-    post {
-        success {
-            echo 'Nginx Deployment to EKS was successful!'
-        }
-        failure {
-            echo 'Deployment failed.'
-        }
-    }
+}
+}
 }
