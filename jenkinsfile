@@ -8,7 +8,7 @@ pipeline {
             // Use bash for executing commands
             sh 'bash -c "aws eks update-kubeconfig --name demo1 --region ap-south-1"'
             sh 'bash -c "kubectl get ns"'
-            sh 'bash -c "kubectl apply -f deployment.yaml"'
+            sh 'bash -c "kubectl apply -f nginx-deployment.yaml"'
                 
         }
     }
